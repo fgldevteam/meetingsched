@@ -15,10 +15,28 @@
             .thumbnail {
                 padding:0;
             }
-
+            .error{ color: #c00;}
         </style>
     </head>
 
+
+<?php  
+$host = "127.0.0.1";
+$user = "root";
+$pass = "";
+$db = "meetingsched";
+
+$connection = mysqli_connect($host, $user, $pass, $db);
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+
+$q = "select * from meetings";
+$result = mysqli_query($connection, $q);
+
+
+?>
     <body>
             <div class="container">
 
@@ -26,157 +44,72 @@
               <div class="jumbotron">
                 <h1>Meet With Duncan</h1>
                 <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-  <!--               -->
 
                 
 
-                <form>
+                <div id="regform">
+                    <small>All fields are required.</small>
                       <div class="form-group">
 
-                        <label for="exampleInputEmail1" class="pull-left">First Name</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="First Name">
+                        <label for="firstname" class="pull-left" id="firstnamelabel">First Name</label>
+                        <input type="text" class="form-control" id="firstname" placeholder="First Name">
                         <br />
-                        <label for="exampleInputEmail1" class="pull-left">Last Name</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Last Name">
+                        <label for="lastname" class="pull-left" id="lastnamelabel">Last Name</label>
+                        <input type="text" class="form-control" id="lastname" placeholder="Last Name">
                         <br />
-                        <label for="exampleInputEmail1" class="pull-left">Department</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Department">
+                        <label for="department" class="pull-left" id="departmentlabel">Department</label>
+                        <input type="text" class="form-control" id="department" placeholder="Department">
                         <br />
-                        <label for="exampleInputEmail1" class="pull-left">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                        <label for="email" class="pull-left" id="emaillabel">Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email">
                       </div>
 
-                 </form>
+                 </div>
               </div>
 
               <div class="row marketing">
+
+                <div class="row" id="meetingtimes">
                 <center>
-                <h2>Select a Time</h2>
+                <h2 id="meetingheader">Select a Time</h2>
                 </center>
-                <div class="row">
-                            <div class="col-sm-4">
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <center>
-                                            <h2>10 seats</h2>
-                                            <h4 class="">Tuesday, Oct 10 <br />4:00pm - 5:00pm</h4>
-                                            <p class="">Atmosphere Boardroom</p> 
-                                        </center>
-                                            <a href="#" class="btn btn-default btn-xs pull-right" role="button"><i class="glyphicon glyphicon-edit"></i></a>  <a href="#" class="btn btn-default btn-xs" role="button">More Info</a>
-                                    </div>
-                                </div>
+                <?php
+                while($row = $result->fetch_assoc()){
+                ?>
+                    <div class="col-sm-4">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <center>
+                                    <?php
+                                    if( $row['seats'] <= 0) {
+                                    ?>
+                                    <h2>FULL</h2>
+                                    <?php } else { ?>
+                                    <h2><?=$row['seats']?> seats</h2>
+                                    <?php
+                                    }
+                                    ?>
+                                    
+                                    <h4 class=""><?=$row['meeting_date']?> <br /><?=$row['meeting_time']?></h4>
+                                    <p class=""><?=$row['meeting_location']?></p> 
+                                    
+                                    <?php
+                                    if( $row['seats'] <= 0) {
+                                    ?>
+                                    <p>&nbsp;</p>
+                                    <?php } else { ?>
+                                    <p><input type="radio" name="optionsMeeting" value="<?=$row['id']?>"> &nbsp; Select this meeting</p>
+                                    <?php
+                                    }
+                                    ?>
+                                    
+                                </center>
                             </div>
+                        </div>
+                    </div>
+                <?php } ?>
 
-                            <div class="col-sm-4">
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <center>
-                                            <h2>10 seats</h2>
-                                            <h4 class="">Tuesday, Oct 10 <br />4:00pm - 5:00pm</h4>
-                                            <p class="">Atmosphere Boardroom</p> 
-                                        </center>
-                                            <a href="#" class="btn btn-default btn-xs pull-right" role="button"><i class="glyphicon glyphicon-edit"></i></a>  <a href="#" class="btn btn-default btn-xs" role="button">More Info</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <center>
-                                            <h2>10 seats</h2>
-                                            <h4 class="">Tuesday, Oct 10 <br />4:00pm - 5:00pm</h4>
-                                            <p class="">Atmosphere Boardroom</p> 
-                                        </center>
-                                            <a href="#" class="btn btn-default btn-xs pull-right" role="button"><i class="glyphicon glyphicon-edit"></i></a>  <a href="#" class="btn btn-default btn-xs" role="button">More Info</a>
-                                    </div>
-                                </div>
-                            </div>                                                       
-
-                </div>
-
-                <div class="row">
-                            <div class="col-sm-4">
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <center>
-                                            <h2>10 seats</h2>
-                                            <h4 class="">Tuesday, Oct 10 <br />4:00pm - 5:00pm</h4>
-                                            <p class="">Atmosphere Boardroom</p> 
-                                        </center>
-                                            <a href="#" class="btn btn-default btn-xs pull-right" role="button"><i class="glyphicon glyphicon-edit"></i></a>  <a href="#" class="btn btn-default btn-xs" role="button">More Info</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <center>
-                                            <h2>10 seats</h2>
-                                            <h4 class="">Tuesday, Oct 10 <br />4:00pm - 5:00pm</h4>
-                                            <p class="">Atmosphere Boardroom</p> 
-                                        </center>
-                                            <a href="#" class="btn btn-default btn-xs pull-right" role="button"><i class="glyphicon glyphicon-edit"></i></a>  <a href="#" class="btn btn-default btn-xs" role="button">More Info</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <center>
-                                            <h2>10 seats</h2>
-                                            <h4 class="">Tuesday, Oct 10 <br />4:00pm - 5:00pm</h4>
-                                            <p class="">Atmosphere Boardroom</p> 
-                                        </center>
-                                            <a href="#" class="btn btn-default btn-xs pull-right" role="button"><i class="glyphicon glyphicon-edit"></i></a>  <a href="#" class="btn btn-default btn-xs" role="button">More Info</a>
-                                    </div>
-                                </div>
-                            </div>                                                       
-
-                </div>
-
-
-                <div class="row">
-                            <div class="col-sm-4">
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <center>
-                                            <h2>10 seats</h2>
-                                            <h4 class="">Tuesday, Oct 10 <br />4:00pm - 5:00pm</h4>
-                                            <p class="">Atmosphere Boardroom</p> 
-                                        </center>
-                                            <a href="#" class="btn btn-default btn-xs pull-right" role="button"><i class="glyphicon glyphicon-edit"></i></a>  <a href="#" class="btn btn-default btn-xs" role="button">More Info</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <center>
-                                            <h2>10 seats</h2>
-                                            <h4 class="">Tuesday, Oct 10 <br />4:00pm - 5:00pm</h4>
-                                            <p class="">Atmosphere Boardroom</p> 
-                                        </center>
-                                            <a href="#" class="btn btn-default btn-xs pull-right" role="button"><i class="glyphicon glyphicon-edit"></i></a>  <a href="#" class="btn btn-default btn-xs" role="button">More Info</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="thumbnail">
-                                    <div class="caption">
-                                        <center>
-                                            <h2>10 seats</h2>
-                                            <h4 class="">Tuesday, Oct 10 <br />4:00pm - 5:00pm</h4>
-                                            <p class="">Atmosphere Boardroom</p> 
-                                        </center>
-                                            <a href="#" class="btn btn-default btn-xs pull-right" role="button"><i class="glyphicon glyphicon-edit"></i></a>  <a href="#" class="btn btn-default btn-xs" role="button">More Info</a>
-                                    </div>
-                                </div>
-                            </div>                                                       
+                                                  
 
                 </div>                                
 
@@ -184,14 +117,14 @@
               </div>
 
 
-              <p><a class="btn btn-lg btn-success" href="#" role="button">Send Registration</a></p> 
+              <p><a id="submit" class="btn btn-lg btn-success" href="#" role="button">Send Registration</a></p> 
               
             </div>
 
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="js/bootstrap.js"></script>
+        <script src="js/send.js"></script>
     </body>
 
 </html>
