@@ -44,7 +44,7 @@ $result = mysqli_query($connection, $q);
             <form>
               <div class="jumbotron">
                 <h1>Meet With Duncan</h1>
-                <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+     
 
                 
 
