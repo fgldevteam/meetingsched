@@ -76,7 +76,10 @@ $result = mysqli_query($connection, $q);
                 </center>
                 <?php
                 while($row = $result->fetch_assoc()){
+
+                    if( $row['seats'] > 0 ){
                 ?>
+
                     <div class="col-sm-4">
                         <div class="thumbnail">
                             <div class="caption">
@@ -108,7 +111,11 @@ $result = mysqli_query($connection, $q);
                             </div>
                         </div>
                     </div>
-                <?php } ?>
+                        
+                <?php } 
+
+                } //endwhile
+                ?>
 
                                                   
 
